@@ -1,6 +1,6 @@
 # Words — Frontend
 
-Angular SSR client for **Words**, a vocabulary-learning app. This repo is the **frontend half** of the Words project — it talks to the microservices backend in the companion [Words-Backend](../Words-Backend) repo over its `/api/v1/*` gateway.
+Angular SSR client for **Words**, a vocabulary-learning app. This repo is the **frontend half** of the Words project — it talks to the microservices backend in the companion [Words-Backend](https://github.com/DanilProggg/Words-Backend) repo over its `/api/v1/*` gateway.
 
 ## What it does
 
