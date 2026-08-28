@@ -1,59 +1,30 @@
-# Words
+# Words — Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.5.
+Angular SSR client for **Words**, a vocabulary-learning app. This repo is the **frontend half** of the Words project — it talks to the microservices backend in the companion [Words-Backend](../Words-Backend) repo over its `/api/v1/*` gateway.
 
-## Development server
+## What it does
 
-To start a local development server, run:
+- **Preview** — a landing/entry screen shown at the root route.
+- **Dictionary** module, with its own sub-routes:
+  - **List** — browse the signed-in user's saved words.
+  - **Add** — add a new word (translation, transcription, notes) to the dictionary.
+  - **Learn** — the spaced-learning flow: fetches the next word due for review from the backend and lets the user grade their recall, which updates the word's knowledge level server-side.
+  - **Repeat** — a review/drill pass over already-seen words.
+- A shared navbar component scoped to the dictionary module for switching between list/add/learn/repeat.
 
-```bash
-ng serve
-```
+## Tech stack
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- Angular 19, standalone components, lazy-loaded feature routes
+- Angular Universal SSR (`@angular/ssr`) with an Express server (`src/server.ts`) for server-rendered pages
+- RxJS, SCSS
+- Karma/Jasmine for unit tests
 
-## Code scaffolding
+## Running locally
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+A `docker-compose.yml` and `Dockerfile` are provided (the source repo ships without one): a Node 20 build stage runs `npm ci && npm run build`, then the SSR server is started with `node dist/words/server/server.mjs`.
 
 ```bash
-ng build
+docker compose up --build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+The app is served on `:4000`. It expects the Words backend gateway (`Words-Backend`, port `8090`) to be reachable as its API origin.
